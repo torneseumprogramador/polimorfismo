@@ -29,13 +29,28 @@ namespace CadastroCliente.Services
             return pessoasFisicas.Concat(pessoasJuridicas).ToList();
         }
 
-        public async Task<IPessoa> GetByIdAsync(int id)
+        public async Task<IPessoa> GetByWithParamAsync(int id, TipoPessoa pessoa)
         {
-            var pessoaFisica = await _context.PessoasFisicas.FindAsync(id);
-            if (pessoaFisica != null) return pessoaFisica;
+            if(TipoPessoa.Fisica == pessoa){
+                var pessoaFisica = await _context.PessoasFisicas.FindAsync(id);
+                return pessoaFisica;
+            }
+            else {
+                var pessoaJuridica = await _context.PessoasJuridicas.FindAsync(id);
+                return pessoaJuridica;
+            }
+        }
 
-            var pessoaJuridica = await _context.PessoasJuridicas.FindAsync(id);
-            return pessoaJuridica;
+        public async Task<IPessoa> GetByWithParamAsync(string nome, TipoPessoa pessoa)
+        {
+            if(TipoPessoa.Fisica == pessoa){
+                var pessoaFisica = await _context.PessoasFisicas.Where(c => c.Nome.Contains(nome)).FirstAsync();
+                return pessoaFisica;
+            }
+            else{
+                var pessoaJuridica = await _context.PessoasJuridicas.Where(c => c.Nome.Contains(nome)).FirstAsync();
+                return pessoaJuridica;
+            }
         }
 
         public async Task AddAsync(IPessoa pessoa)

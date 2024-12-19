@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     ));
 
 
+builder.Services.AddScoped<PessoaFisicaService>();
+builder.Services.AddScoped<PessoaJuridicaService>();
 builder.Services.AddScoped<PessoaService>();
 
 // Add services to the container.

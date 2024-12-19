@@ -9,11 +9,15 @@ namespace dotnet.Controllers;
 public class ClientesController : Controller
 {
     private readonly ILogger<ClientesController> _logger;
+    private readonly PessoaFisicaService _pessoaFisicaService;
+    private readonly PessoaJuridicaService _pessoaJuridicaService;
     private readonly PessoaService _pessoaService;
 
-    public ClientesController(ILogger<ClientesController> logger, PessoaService pessoaService)
+    public ClientesController(ILogger<ClientesController> logger, PessoaService pessoaService,  PessoaFisicaService pessoaFisicaService, PessoaJuridicaService pessoaJuridicaService)
     {
         _logger = logger;
+        _pessoaFisicaService = pessoaFisicaService;
+        _pessoaJuridicaService = pessoaJuridicaService;
         _pessoaService = pessoaService;
     }
 
@@ -95,7 +99,7 @@ public class ClientesController : Controller
     {
         try
         {
-            await _pessoaService.DeleteAsync(id, TipoPessoa.Fisica); // Chama o serviço para exclusão
+            await _pessoaFisicaService.DeleteAsync(id); // Chama o serviço para exclusão
             TempData["Success"] = "Cliente excluído com sucesso!"; // Mensagem de sucesso
         }
         catch (Exception ex)
