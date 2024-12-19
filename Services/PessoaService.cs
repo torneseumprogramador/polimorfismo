@@ -4,6 +4,12 @@ using CadastroCliente.Interfaces;
 using CadastroCliente.Models;
 using Microsoft.EntityFrameworkCore;
 
+public enum TipoPessoa 
+{
+    Fisica,
+    juridica
+}
+
 namespace CadastroCliente.Services
 {
     public class PessoaService
@@ -58,21 +64,24 @@ namespace CadastroCliente.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
-        {
-            var pessoaFisica = await _context.PessoasFisicas.FindAsync(id);
-            if (pessoaFisica != null)
-            {
-                _context.PessoasFisicas.Remove(pessoaFisica);
-                await _context.SaveChangesAsync();
-                return;
+        public async Task DeleteAsync(int id, TipoPessoa pessoa)
+        {   
+            if(TipoPessoa.Fisica == pessoa){
+                var pessoaFisica = await _context.PessoasFisicas.FindAsync(id);
+                if (pessoaFisica != null)
+                {
+                    _context.PessoasFisicas.Remove(pessoaFisica);
+                    await _context.SaveChangesAsync();
+                    return;
+                }
             }
-
-            var pessoaJuridica = await _context.PessoasJuridicas.FindAsync(id);
-            if (pessoaJuridica != null)
-            {
-                _context.PessoasJuridicas.Remove(pessoaJuridica);
-                await _context.SaveChangesAsync();
+            else{
+                var pessoaJuridica = await _context.PessoasJuridicas.FindAsync(id);
+                if (pessoaJuridica != null)
+                {
+                    _context.PessoasJuridicas.Remove(pessoaJuridica);
+                    await _context.SaveChangesAsync();
+                }
             }
         }
     }

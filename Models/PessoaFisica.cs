@@ -8,17 +8,21 @@ namespace CadastroCliente.Models
     {
         public int Id { get; set; }
 
-        [MaxLength(14)]
-        public string Documento { get; set; }
-
-       [NotMapped]
-        public string CPF
+        [NotMapped]
+        public string Documento
         {
-            get => Documento;
-            set => Documento = value;
+            get => CPF;
+            set => CPF = value;
         }
 
-        [Required]
+        [Required(ErrorMessage = "O CPF é obrigatório.")]
+        [StringLength(14, ErrorMessage = "O CPF deve ter 11 dígitos.", MinimumLength = 11)]
+        [RegularExpression(@"^\d{3}\.\d{3}\.\d{3}-\d{2}$", ErrorMessage = "O CPF deve estar no formato 000.000.000-00.")]
+        public string CPF { get;set; }
+
+
+        [Required(ErrorMessage = "O Nome é obrigatório.")]
+        [StringLength(100, ErrorMessage = "O Nome deve ter no máximo 100 caracteres.")]
         public string Nome { get; set; }
     }
 }

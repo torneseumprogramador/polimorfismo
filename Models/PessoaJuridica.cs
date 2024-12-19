@@ -8,17 +8,21 @@ namespace CadastroCliente.Models
     {
         public int Id { get; set; }
 
-        [MaxLength(14)]
-        public string Documento { get; set; }
 
         [NotMapped]
-        public string CNPJ
+        public string Documento
         {
-            get => Documento;
-            set => Documento = value;
+            get => CNPJ;
+            set => CNPJ = value;
         }
 
-        [Required]
+        [Required(ErrorMessage = "O CNPJ é obrigatório.")]
+        [StringLength(18, ErrorMessage = "O CNPJ deve conter exatamente 18 caracteres numéricos.", MinimumLength = 18)]
+        [RegularExpression(@"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$", ErrorMessage = "O CNPJ deve estar no formato 00.000.000/0000-00.")]
+        public string CNPJ { get; set; }
+
+        [Required(ErrorMessage = "O Nome é obrigatório.")]
+        [StringLength(100, ErrorMessage = "O Nome deve conter no máximo 100 caracteres.")]
         public string Nome { get; set; }
     }
 }

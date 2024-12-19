@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace dotnet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241219191828_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241219200255_CampoCNPJ")]
+    partial class CampoCNPJ
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,13 +32,15 @@ namespace dotnet.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Documento")
+                    b.Property<string>("CPF")
+                        .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -53,13 +55,15 @@ namespace dotnet.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Documento")
-                        .HasMaxLength(14)
-                        .HasColumnType("varchar(14)");
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasMaxLength(18)
+                        .HasColumnType("varchar(18)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 

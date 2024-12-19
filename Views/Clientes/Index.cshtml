@@ -5,23 +5,38 @@
 @model IEnumerable<CadastroCliente.Interfaces.IPessoa>
 
 <h1>Lista de Clientes</h1>
+<a href="/clientes/fisico/novo" class="btn btn-primary">Novo cliente fisico</a>
+<a href="/clientes/juridica/novo" class="btn btn-primary">Novo cliente juridico</a>
+
+<hr>
 
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Nome</th>
             <th>Documento</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var cliente in Model)
         {
             <tr>
-                <td>@cliente.Id</td>
                 <td>@cliente.Nome</td>
                 <td>@cliente.Documento</td>
+                <td>
+                    <form asp-action="@(cliente is CadastroCliente.Models.PessoaFisica ? "DeleteFisica" : "DeleteJuridica")" 
+                        asp-controller="Clientes" 
+                        method="post" 
+                        style="display: inline;">
+                        <input type="hidden" name="id" value="@cliente.Id" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este cliente?');">
+                            Excluir
+                        </button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
