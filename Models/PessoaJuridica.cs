@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using CadastroCliente.Interfaces;
 
 namespace CadastroCliente.Models
@@ -10,13 +11,11 @@ namespace CadastroCliente.Models
         [MaxLength(14)]
         public string Documento { get; set; }
 
-        public string Cnpj {
-            get {
-                return this.Documento;
-            }
-            set {
-                this.Documento = value;
-            }
+        [NotMapped]
+        public string CNPJ
+        {
+            get => Documento;
+            set => Documento = value;
         }
 
         [Required]

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using CadastroCliente.Data;
+using CadastroCliente.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     ));
 
+
+builder.Services.AddScoped<PessoaService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
